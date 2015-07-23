@@ -168,8 +168,15 @@
                         </form>
                     </div>
                     <div id="step-4">
-                        <h2 class="StepTitle">Logging</h2>
-                        <!-- step content -->
+                        <h2 class="StepTitle">Log</h2>
+                        <form class="form-horizontal" style="padding-top: 10px;">
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-2">email address: </label>
+                                <div class="col-md-8">
+                                    <input type="email" id="email" class="form-control" required=""></textarea>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -212,6 +219,10 @@
   $(document).ready(function() {
       // Initialize Smart Wizard
         $('#wizard').smartWizard();
+
+
+
+
   });
 </script>
 
