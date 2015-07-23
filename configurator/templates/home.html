@@ -117,12 +117,44 @@
                         </a></li>
                     </ul>
                     <div id="step-1">
-                        <h2 class="StepTitle">Step 1 Content</h2>
-                        <!-- step content -->
+                        <h2 class="StepTitle">Select a manufacturer</h2>
+
+                        <div class="form-group" style="padding-top: 10px;">
+                            <label for="manufacturer">Manufacturer</label>
+                            <select class="form-control" id="manufacturer">
+                                <option>Huawei</option>
+                                <option>Ericsson</option>
+                                <option>Juniper</option>
+                                <option>Cisco</option>
+                                <option>Alcatel ISAM</option>
+                            </select>
+                        </div>
                     </div>
                     <div id="step-2">
-                        <h2 class="StepTitle">Step 2 Content</h2>
-                        <!-- step content -->
+                        <h2 class="StepTitle">Destinations</h2>
+                        <form class="form-horizontal" style="padding-top: 10px;">
+                            <div class="form-group">
+                                <label for="username" class="control-label col-md-1">Username: </label>
+                                <div class="col-md-offset-1 col-md-9">
+                                    <input type="text" placeholder="Username" id="username" name="username" class="form-control input input-md">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="control-label col-md-1">Password: </label>
+                                <div class="col-md-offset-1 col-md-9">
+                                    <input type="password" placeholder="Password" id="password" name="password" class="form-control input input-md">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ips" class="control-label col-md-1">IP Addresses: </label>
+                                <div class="col-md-offset-1 col-md-9">
+                                    <textarea id="ips" class="form-control" rows="10"></textarea>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
                     <div id="step-3">
                         <h2 class="StepTitle">Step 3 Title</h2>
