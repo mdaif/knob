@@ -135,7 +135,7 @@
                             <label for="ips" class="control-label col-md-1">IP Addresses: </label>
 
                             <div class="col-md-offset-1 col-md-9">
-                                <textarea id="ips" class="form-control" rows="10"></textarea>
+                                <textarea id="ips" class="form-control"  id="ips" rows="10"></textarea>
                             </div>
                         </div>
                     </form>
@@ -149,7 +149,7 @@
                             <label for="commands" class="control-label col-md-1">Commands: </label>
 
                             <div class="col-md-offset-1 col-md-9">
-                                <textarea id="commands" class="form-control" rows="10"></textarea>
+                                <textarea id="commands" class="form-control" id="commands" rows="10"></textarea>
                             </div>
                         </div>
                     </form>
@@ -159,10 +159,10 @@
 
                     <form class="form-horizontal" style="padding-top: 10px;">
                         <div class="form-group">
-                            <label for="email" class="control-label col-md-2">Admin email address: </label>
+                            <label for="admin_email" class="control-label col-md-2">Admin email address: </label>
 
                             <div class="col-md-8">
-                                <input type="email" id="email" class="form-control" required=""></textarea>
+                                <input type="email" id="admin_email" class="form-control" required></textarea>
                             </div>
                         </div>
                     </form>
@@ -205,14 +205,26 @@
 <script src="{% static 'js/jquery.smartWizard.js' %}"></script>
 
 <script type="text/javascript">
+    function onFinishCallback(objs, context){
+        console.log($("#username").val());
+        console.log($("#password").val());
+        console.log($("#ips").val());
+        console.log($("#commands").val());
+        console.log($("#admin_email").val());
+    }
+
   $(document).ready(function() {
       // Initialize Smart Wizard
-        $('#wizard').smartWizard({labelFinish: 'Run!'});
+        $('#wizard').smartWizard({
+            labelFinish: 'Run!',
+            onFinish:onFinishCallback
+        });
 
 
 
 
   });
+
 
 </script>
 
