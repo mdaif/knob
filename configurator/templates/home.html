@@ -69,131 +69,120 @@
             <!-- /.col-lg-12 -->
         </div>
         {% if workers_count %}
-            <div class="row">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3"><i class="fa fa-wrench fa-5x"></i></div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">{{workers_count}}</div>
-                                <div>Running workers!</div>
-                            </div>
+        <div class="row">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3"><i class="fa fa-wrench fa-5x"></i></div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{workers_count}}</div>
+                            <div>Running workers!</div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
+        <div class="row">
 
-                <div id="wizard" class="swMain">
-                    <ul>
-                        <li><a href="#step-1">
-                            <label class="stepNumber">1</label>
+            <div id="wizard" class="swMain">
+                <ul>
+                    <li><a href="#step-1">
+                        <label class="stepNumber">1</label>
                   <span class="stepDesc">
                      Step 1<br/>
-                     <small>Select Manufacturer</small>
-                  </span>
-                        </a></li>
-                        <li><a href="#step-2">
-                            <label class="stepNumber">2</label>
-                  <span class="stepDesc">
-                     Step 2<br/>
                      <small>Select destinations</small>
                   </span>
-                        </a></li>
-                        <li><a href="#step-3">
-                            <label class="stepNumber">3</label>
+                    </a></li>
+                    <li><a href="#step-2">
+                        <label class="stepNumber">2</label>
                   <span class="stepDesc">
-                     Step 3<br/>
+                     Step 2<br/>
                      <small>Commands</small>
                   </span>
-                        </a></li>
-                        <li><a href="#step-4">
-                            <label class="stepNumber">4</label>
+                    </a></li>
+                    <li><a href="#step-3">
+                        <label class="stepNumber">3</label>
                   <span class="stepDesc">
-                     Step 4<br/>
+                     Step 3<br/>
                      <small>Logging</small>
                   </span>
-                        </a></li>
-                    </ul>
-                    <div id="step-1">
-                        <h2 class="StepTitle">Select a manufacturer</h2>
+                    </a></li>
+                </ul>
+                <div id="step-1">
+                    <h2 class="StepTitle">Destinations</h2>
 
-                        <div class="form-group" style="padding-top: 10px;">
-                            <label for="manufacturer">Manufacturer</label>
-                            <select class="form-control" id="manufacturer">
-                                <option>Huawei</option>
-                                <option>Ericsson</option>
-                                <option>Juniper</option>
-                                <option>Cisco</option>
-                                <option>Alcatel ISAM</option>
-                            </select>
+                    <form class="form-horizontal" style="padding-top: 10px;">
+                        <div class="form-group">
+                            <label for="username" class="control-label col-md-1">Username: </label>
+
+                            <div class="col-md-offset-1 col-md-9">
+                                <input type="text" placeholder="Username" id="username" name="username"
+                                       class="form-control input input-md">
+                            </div>
                         </div>
-                    </div>
-                    <div id="step-2">
-                        <h2 class="StepTitle">Destinations</h2>
-                        <form class="form-horizontal" style="padding-top: 10px;">
-                            <div class="form-group">
-                                <label for="username" class="control-label col-md-1">Username: </label>
-                                <div class="col-md-offset-1 col-md-9">
-                                    <input type="text" placeholder="Username" id="username" name="username" class="form-control input input-md">
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="password" class="control-label col-md-1">Password: </label>
-                                <div class="col-md-offset-1 col-md-9">
-                                    <input type="password" placeholder="Password" id="password" name="password" class="form-control input input-md">
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="password" class="control-label col-md-1">Password: </label>
 
-                            <div class="form-group">
-                                <label for="ips" class="control-label col-md-1">IP Addresses: </label>
-                                <div class="col-md-offset-1 col-md-9">
-                                    <textarea id="ips" class="form-control" rows="10"></textarea>
-                                </div>
+                            <div class="col-md-offset-1 col-md-9">
+                                <input type="password" placeholder="Password" id="password" name="password"
+                                       class="form-control input input-md">
                             </div>
-                        </form>
+                        </div>
 
-                    </div>
-                    <div id="step-3">
-                        <h2 class="StepTitle">Commands</h2>
-                        <form class="form-horizontal" style="padding-top: 10px;">
-                            <div class="form-group">
-                                <label for="commands" class="control-label col-md-1">Commands: </label>
-                                <div class="col-md-offset-1 col-md-9">
-                                    <textarea id="commands" class="form-control" rows="10"></textarea>
-                                </div>
+                        <div class="form-group">
+                            <label for="ips" class="control-label col-md-1">IP Addresses: </label>
+
+                            <div class="col-md-offset-1 col-md-9">
+                                <textarea id="ips" class="form-control" rows="10"></textarea>
                             </div>
-                        </form>
-                    </div>
-                    <div id="step-4">
-                        <h2 class="StepTitle">Log</h2>
-                        <form class="form-horizontal" style="padding-top: 10px;">
-                            <div class="form-group">
-                                <label for="email" class="control-label col-md-2">email address: </label>
-                                <div class="col-md-8">
-                                    <input type="email" id="email" class="form-control" required=""></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+
                 </div>
+                <div id="step-2">
+                    <h2 class="StepTitle">Commands</h2>
 
+                    <form class="form-horizontal" style="padding-top: 10px;">
+                        <div class="form-group">
+                            <label for="commands" class="control-label col-md-1">Commands: </label>
+
+                            <div class="col-md-offset-1 col-md-9">
+                                <textarea id="commands" class="form-control" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="step-3">
+                    <h2 class="StepTitle">Log</h2>
+
+                    <form class="form-horizontal" style="padding-top: 10px;">
+                        <div class="form-group">
+                            <label for="email" class="control-label col-md-2">Admin email address: </label>
+
+                            <div class="col-md-8">
+                                <input type="email" id="email" class="form-control" required=""></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+
+        </div>
         {% else %}
-            <div class="row">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3"><i class="fa fa-exclamation-circle fa-5x"></i></div>
+        <div class="row">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3"><i class="fa fa-exclamation-circle fa-5x"></i></div>
 
-                                <div class="huge">No running workers!</div>
+                        <div class="huge">No running workers!</div>
 
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         {% endif %}
     </div>
 
@@ -218,12 +207,13 @@
 <script type="text/javascript">
   $(document).ready(function() {
       // Initialize Smart Wizard
-        $('#wizard').smartWizard();
+        $('#wizard').smartWizard({labelFinish: 'Run!'});
 
 
 
 
   });
+
 </script>
 
 </body>
