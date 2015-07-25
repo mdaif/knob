@@ -203,14 +203,24 @@
 
 <script src="{% static 'js/sb-admin-2.js' %}"></script>
 <script src="{% static 'js/jquery.smartWizard.js' %}"></script>
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
 
 <script type="text/javascript">
     function onFinishCallback(objs, context){
-        console.log($("#username").val());
-        console.log($("#password").val());
-        console.log($("#ips").val());
-        console.log($("#commands").val());
-        console.log($("#admin_email").val());
+        $.ajax({
+          method: "POST",
+          url: "{% url 'exec_command' %}",
+          data: { username: $("#username").val(), password: $("#password").val(),  ips: $("#ips").val(),
+                  commands: $("#commands").val(), admin_email: $("#admin_email").val()
+                },
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken') )
+
+            }
+        })
+          .done(function( msg ) {
+            alert("Data submitted to the backend servers" );
+          });
     }
 
   $(document).ready(function() {
@@ -219,10 +229,6 @@
             labelFinish: 'Run!',
             onFinish:onFinishCallback
         });
-
-
-
-
   });
 
 
