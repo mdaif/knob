@@ -24,3 +24,5 @@ class TelnetInputForm(forms.Form):
         cleaned_data = super(TelnetInputForm, self).clean()
         if 'ips' in cleaned_data:
             cleaned_data['ips'] = cleaned_data['ips'].splitlines()
+        if 'commands' in cleaned_data:
+            cleaned_data['commands'] = cleaned_data['commands'].splitlines()
