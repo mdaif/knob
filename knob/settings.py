@@ -110,5 +110,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+EMAIL_HOST = os.environ['DJANGO_EMAIL_HOST']
+EMAIL_PORT = os.environ['DJANGO_EMAIL_PORT']
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

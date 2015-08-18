@@ -6,7 +6,6 @@ from celery.contrib import rdb
 
 @shared_task(name='tasks.configure_batch')
 def configure_batch(ips, telnet_commands, username, password):
-    #rdb.set_trace()
     results = []
     for ip in ips:
         try:

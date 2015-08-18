@@ -5,3 +5,4 @@ static/*
 *.sqlite3
 env*
 *.db
+set_env.sh
