@@ -5,11 +5,13 @@ from celery.utils import uuid
 
 
 class TelnetHandler(object):
-    def __init__(self, host_address):
+    def __init__(self, host_address, username, password):
         self.host_address = host_address
+        self.username = username
+        self.password = password
 
     def __enter__(self):
-        self.account = Account('mdaif', password='fat7yTE')
+        self.account = Account(self.username, password=self.password)
         self.conn = Telnet(debug=0, connect_timeout=None)
         self.conn.connect(self.host_address)
         self.conn.login(self.account)
@@ -35,3 +37,7 @@ class ProgressChord(chord):
         callback_id = body.options.setdefault('task_id', uuid())
         r = _chord(**kwargs)
         return _chord.AsyncResult(callback_id), r
+
+
+def flat_map(nested):
+    return [y for x in nested for y in x]

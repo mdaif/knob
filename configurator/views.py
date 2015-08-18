@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import View
 from django.http import HttpResponse
 from .forms import TelnetInputForm
-from .tasks import configure_batch, email_admin, test_chord
+from .tasks import configure_batch, email_admin
 from celery import chord, group
 from .helpers import ProgressChord
 import json
@@ -34,13 +34,13 @@ class CommandExecutionView(View):
         params = []
 
         ips_length = len(form.cleaned_data['ips'])
-        for i in range(ips_length):
-            new_list = (form.cleaned_data['ips'][i: i + int(math.ceil(float(ips_length) / NO_OF_TASKS))],
+        for i in range(0, ips_length, int(math.ceil(float(ips_length) / NO_OF_WORKERS))):
+            new_list = (form.cleaned_data['ips'][i: i + int(math.ceil(float(ips_length) / NO_OF_WORKERS))],
                         form.cleaned_data['commands'], form.cleaned_data['username'], form.cleaned_data['password'])
 
             params.append(new_list)
 
-        configurations = group(configure_batch.s(*param) for param in params)
+        configurations = configure_batch.chunks(params, NO_OF_WORKERS)
         progress_chord = ProgressChord(configurations, email_admin.s(form.cleaned_data['admin_email']))
         result = progress_chord.apply_async()
 

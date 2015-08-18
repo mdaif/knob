@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'knob.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'knobdb'),
+        'NAME': os.path.join(BASE_DIR, 'knob.db'),
         'USERNAME': 'root',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
@@ -108,3 +108,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
