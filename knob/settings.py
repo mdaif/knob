@@ -110,8 +110,13 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ['DJANGO_EMAIL_HOST']
-EMAIL_PORT = os.environ['DJANGO_EMAIL_PORT']
+
+
+EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_PASSWORD')
+EMAIL_PORT = os.environ.get('DJANGO_EMAIL_PORT')
+EMAIL_USE_TLS = bool(os.environ.get('DJANGO_EMAIL_USE_TLS'))
 
 try:
     from local_settings import *
