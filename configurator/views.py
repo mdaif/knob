@@ -4,12 +4,16 @@ from django.http import HttpResponse
 from .forms import TelnetInputForm
 from .tasks import configure_batch, email_admin
 from celery import chord, group
+from knob.celery import app as celery_app
 from .helpers import ProgressChord
 import json
 import math
 
-NO_OF_WORKERS = 5  # celery workers in action
-NO_OF_TASKS = NO_OF_WORKERS * 2  # imperical value
+try:
+    stats = celery_app.control.inspect().stats()
+    NO_OF_WORKERS = stats[stats.keys()[0]]['pool']['max-concurrency']
+except KeyError:
+    NO_OF_WORKERS = None
 
 
 class HomePageView(TemplateView):
