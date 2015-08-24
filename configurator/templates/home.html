@@ -121,22 +121,26 @@
                         </div>
                         <p>(*) Mandatory</p>
                     </section>
+                    <h3>Finish</h3>
+                    <section>
+                        <p>Your commands are about to be submitted ...</p>
+                    </section>
                 </div>
             </form>
 
         {% else %}
-        <div class="row">
-            <div class="panel panel-red">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3"><i class="fa fa-exclamation-circle fa-5x"></i></div>
+            <div class="row">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3"><i class="fa fa-exclamation-circle fa-5x"></i></div>
 
-                        <div class="huge">No running workers!</div>
+                            <div class="huge">No running workers!</div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         {% endif %}
     </div>
 
@@ -176,6 +180,22 @@
               });
         }
 
+        function formatErrorMessage(response){
+            if (response.form_error) {
+                var msg = "";
+                $.each(response.message, function(key, value){
+                    msg += key + ": <br>";
+                    $.each(value, function(index, error){
+                        msg += error + "<br>";
+                    });
+                });
+                return msg;
+            } else {
+                return response.message;
+            }
+
+        }
+
         $(document).ready(function() {
             var form = $("#wizard-form");
             form.validate({
@@ -213,26 +233,43 @@
 
                         }
                     })
-                      .done(function( msg ) {
-                        var validator = $( "#wizard-form" ).validate();
-                        var required = $(".required");
-                        required.removeClass("required");
-                        $("#steps-uid-0-t-0").click();
-                        required.addClass("required");
-                        $('#wizard-form').find("input[type=text], textarea").val("");
-                        
-                        noty({
-                            text: "Data submitted to magic elves ... you'll be contacted soon :)",
-                            layout: 'topRight',
-                            type: 'success',
-                            theme: 'relax',
-                            closeWith: ['click'],
-                            dismissQueue: true,
-                            animation: {
-                                open: 'animated flipInX',
-                                close: 'animated flipOutX'
-                            }
-                        });
+                      .done(function(response) {
+                        if (response.success) {
+                            var validator = $( "#wizard-form" ).validate();
+                            var required = $(".required");
+                            required.removeClass("required");
+                            $("#steps-uid-0-t-0").click();
+                            required.addClass("required");
+                            $('#wizard-form').find("input[type=text], textarea").val("");
+
+                            noty({
+                                text: "Data submitted to magic elves ... you'll be contacted soon :)",
+                                layout: 'topRight',
+                                type: 'success',
+                                theme: 'relax',
+                                closeWith: ['click'],
+                                dismissQueue: true,
+                                animation: {
+                                    open: 'animated flipInX',
+                                    close: 'animated flipOutX'
+                                }
+                            });
+                        } else {
+                            console.log(response);
+                            noty({
+                                text: formatErrorMessage(response),
+                                layout: 'topRight',
+                                type: 'error',
+                                theme: 'relax',
+                                closeWith: ['click'],
+                                dismissQueue: true,
+                                animation: {
+                                    open: 'animated flipInX',
+                                    close: 'animated flipOutX'
+                                }
+                            });
+
+                        }
                       });
                 }
             });
