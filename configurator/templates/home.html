@@ -24,7 +24,8 @@
     <link rel="stylesheet" href="{% static 'css/smart_wizard.css' %}">
     <link rel="stylesheet" href="{% static 'css/smart_wizard_vertical.css' %}">
     <link rel="stylesheet" href="{% static 'css/jquery.steps.css' %}">
-      <link rel="stylesheet" href="{% static 'css/project.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/project.css' %}">
   </head>
 
   <body>
@@ -155,6 +156,7 @@
     <script src="{% static 'js/jquery.validate.min.js' %}"></script>
     <script src="{% static 'js/additional-methods.min.js' %}"></script>
     <script src="{% static 'js/jquery.steps.min.js' %}"></script>
+    <script src="{% static 'js/jquery.noty.packaged.min.js' %}"></script>
     <script type="text/javascript">
 
         function onFinishCallback(objs, context){
@@ -212,7 +214,18 @@
                         }
                     })
                       .done(function( msg ) {
-                        alert("Data submitted to the backend servers" );
+            noty({
+                text: "Data submitted to magic elves ... you'll be contacted soon :)",
+                layout: 'topRight',
+                type: 'success',
+                theme: 'relax',
+                closeWith: ['click'],
+                dismissQueue: true,
+                animation: {
+                    open: 'animated flipInX',
+                    close: 'animated flipOutX'
+                }
+            });
                       });
                 }
             });
