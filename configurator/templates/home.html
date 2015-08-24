@@ -61,7 +61,7 @@
         </div>
         {% if workers_count %}
 
-            <form id="example-form" action="#">
+            <form id="wizard-form" action="#">
                 <div>
                     <h3>Destinations</h3>
                     <section>
@@ -71,7 +71,7 @@
 
                                 <div class="col-md-9">
                                     <input type="text" placeholder="Username" id="username" name="username"
-                                           class="form-control input input-md requried">
+                                           class="form-control input input-md required">
                                 </div>
                             </div>
 
@@ -80,7 +80,7 @@
 
                                 <div class="col-md-9">
                                     <input type="password" placeholder="Password" id="password" name="password"
-                                           class="form-control input input-md requried">
+                                           class="form-control input input-md required">
                                 </div>
                             </div>
 
@@ -88,7 +88,7 @@
                                 <label for="ips" class="control-label col-md-2">IP Addresses: *</label>
 
                                 <div class="col-md-9">
-                                    <textarea id="ips" class="form-control requried"  id="ips" rows="10"></textarea>
+                                    <textarea id="ips" class="form-control required"  id="ips" rows="10"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                 <label for="commands" class="control-label col-md-3">Commands: *</label>
 
                                 <div class="col-md-9">
-                                    <textarea id="commands" class="form-control requried" id="commands" rows="10"
+                                    <textarea id="commands" class="form-control required" id="commands" rows="10"
                                               ></textarea>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                                 <label for="admin_email" class="control-label col-md-2">Admin email address: *</label>
 
                                 <div class="col-md-8">
-                                    <input type="email" id="admin_email" class="form-control email  requried"></textarea>
+                                    <input type="email" id="admin_email" class="form-control email  required"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
         }
 
         $(document).ready(function() {
-            var form = $("#example-form");
+            var form = $("#wizard-form");
             form.validate({
                 errorPlacement: function errorPlacement(error, element) { element.before(error); },
                 rules: {
@@ -214,18 +214,25 @@
                         }
                     })
                       .done(function( msg ) {
-            noty({
-                text: "Data submitted to magic elves ... you'll be contacted soon :)",
-                layout: 'topRight',
-                type: 'success',
-                theme: 'relax',
-                closeWith: ['click'],
-                dismissQueue: true,
-                animation: {
-                    open: 'animated flipInX',
-                    close: 'animated flipOutX'
-                }
-            });
+                        var validator = $( "#wizard-form" ).validate();
+                        var required = $(".required");
+                        required.removeClass("required");
+                        $("#steps-uid-0-t-0").click();
+                        required.addClass("required");
+                        $('#wizard-form').find("input[type=text], textarea").val("");
+                        
+                        noty({
+                            text: "Data submitted to magic elves ... you'll be contacted soon :)",
+                            layout: 'topRight',
+                            type: 'success',
+                            theme: 'relax',
+                            closeWith: ['click'],
+                            dismissQueue: true,
+                            animation: {
+                                open: 'animated flipInX',
+                                close: 'animated flipOutX'
+                            }
+                        });
                       });
                 }
             });
