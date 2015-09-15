@@ -28,7 +28,6 @@ class HomePageView(TemplateView):
 
 class CommandExecutionView(View):
     def post(self, request, *args, **kwargs):
-
         form = TelnetInputForm(request.POST)
         if not form.is_valid():
             return HttpResponse(

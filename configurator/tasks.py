@@ -11,7 +11,7 @@ def configure_batch(ips, telnet_commands, username, password):
         try:
             with TelnetHandler(ip, username, password) as device:
                 for telnet_command in telnet_commands:
-                    device.execute(telnet_command)
+                    device.execute(telnet_command.replace('\\r', '\r'))
         except Exception as e:
                 results.append((False, ip, e.message))
         else:
@@ -29,6 +29,6 @@ def email_admin(results_pairs, email):
         succeeded.extend(["{0}".format(pair[1]) for pair in pairs if pair[0]])
     msg = ["The following destinations succeeded:\n", "\n".join(succeeded)]
     if failed:
-        msg.append("\nThe following destinations failed:\n", "\n".join(failed))
+        msg.append("\nThe following destinations failed:\n{0}".format( "\n".join(failed)))
 
     send_mail('Configurations Results', "".join(msg), 'support@knob.com', [email], fail_silently=False)

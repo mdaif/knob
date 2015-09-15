@@ -2,6 +2,7 @@ from Exscript.protocols import Telnet
 from Exscript import Account
 from celery import chord
 from celery.utils import uuid
+from django.conf import settings
 
 
 class TelnetHandler(object):
@@ -12,7 +13,7 @@ class TelnetHandler(object):
 
     def __enter__(self):
         self.account = Account(self.username, password=self.password)
-        self.conn = Telnet(debug=0, connect_timeout=None)
+        self.conn = Telnet(debug=settings.TELNET_DEBUG_LEVEL, connect_timeout=None)
         self.conn.connect(self.host_address)
         self.conn.login(self.account)
         return self
