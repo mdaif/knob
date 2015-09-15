@@ -62,6 +62,7 @@
         {% if workers_count %}
 
             <form id="wizard-form" action="#">
+                {% csrf_token %}
                 <div>
                     <h3>Destinations</h3>
                     <section>
