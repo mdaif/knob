@@ -2,7 +2,8 @@ from __future__ import absolute_import
 from celery import shared_task
 from .helpers import TelnetHandler, flat_map
 from django.core.mail import send_mail
-from celery.contrib import rdb
+from django.conf import settings
+
 
 @shared_task(name='tasks.configure_batch')
 def configure_batch(ips, telnet_commands, username, password):
@@ -31,4 +32,4 @@ def email_admin(results_pairs, email):
     if failed:
         msg.append("\nThe following destinations failed:\n{0}".format( "\n".join(failed)))
 
-    send_mail('Configurations Results', "".join(msg), 'support@knob.com', [email], fail_silently=False)
+    send_mail('Configurations Results', "".join(msg), settings.EMAIL_SOURCE_ADDRESS, [email], fail_silently=False)

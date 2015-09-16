@@ -117,8 +117,11 @@ EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_PASSWORD')
 EMAIL_PORT = os.environ.get('DJANGO_EMAIL_PORT')
 EMAIL_USE_TLS = bool(os.environ.get('DJANGO_EMAIL_USE_TLS'))
+EMAIL_SOURCE_ADDRESS = 'support@knob.com'
 
 TELNET_DEBUG_LEVEL = 0
+
+
 
 try:
     from local_settings import *
