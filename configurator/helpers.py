@@ -1,11 +1,10 @@
 from Exscript.protocols import Telnet, SSH2
 from Exscript import Account
-from celery import chord
-from celery.utils import uuid
 from django.conf import settings
 from contextlib import contextmanager
 import socket
 import logging
+import math
 
 logger = logging.getLogger(__name__)
 
@@ -68,18 +67,9 @@ class ConnectionHandler(object):
         return self.conn.response
 
 
-class ProgressChord(chord):
-    """A proxy class that results in a chord that keeps track of the results"""
-    def __call__(self, body=None, **kwargs):
-        _chord = self.chord
-        body = (body or self.kwargs['body']).clone()
-        kwargs = dict(self,kwargs, body=body, **kwargs)
-        if _chord.app.conf.CELERY_ALWAYS_EAGER:
-            return self.apply((), kwargs)
-        callback_id = body.options.setdefault('task_id', uuid())
-        r = _chord(**kwargs)
-        return _chord.AsyncResult(callback_id), r
+def chunks(all_ips, available_workers, telnet_commands, username, password):
+    """Yield successive chunks from list all_ips with required arguments to process the destination ips uniformly distributed among workers."""
+    chunk_size = int(math.ceil(float(len(all_ips)) / available_workers))
 
-
-def flat_map(nested):
-    return [y for x in nested for y in x]
+    for i in xrange(0, len(all_ips), chunk_size):
+        yield all_ips[i:i+chunk_size], telnet_commands, username, password

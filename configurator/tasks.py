@@ -1,12 +1,13 @@
-from __future__ import absolute_import
-from celery import shared_task
-from .helpers import ConnectionHandler, flat_map
+from .helpers import ConnectionHandler
 from django.core.mail import send_mail
 from django.conf import settings
+import multiprocessing
+import logging
 
 
-@shared_task(name='tasks.configure_batch')
-def configure_batch(ips, telnet_commands, username, password):
+def configure_batch(args):
+    ips, telnet_commands, username, password = args
+    print multiprocessing.current_process()
     results = []
     for ip in ips:
         try:
@@ -20,9 +21,9 @@ def configure_batch(ips, telnet_commands, username, password):
 
     return results
 
-@shared_task(name='tasks.email_admin')
-def email_admin(results_pairs, email):
-    results_pairs = flat_map(results_pairs[0].get())
+
+def email_admin(results_pairs):
+    email = email_admin.email  # again .. I know .. sorry :(
     failed = []
     succeeded = []
     for pairs in results_pairs:
@@ -33,3 +34,4 @@ def email_admin(results_pairs, email):
         msg.append("\nThe following destinations failed:\n{0}".format( "\n".join(failed)))
 
     send_mail('Configurations Results', "".join(msg), settings.EMAIL_SOURCE_ADDRESS, [email], fail_silently=False)
+    email_admin.pool.close()
