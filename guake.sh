@@ -17,9 +17,5 @@ guake -n $(pwd)
 guake -r "Email" -e "source env/bin/activate;source set_env.sh"
 guake -e "python -m smtpd -n -c DebuggingServer localhost:1025"
 
-guake -n $(pwd)
-guake -r "Celery" -e "source env/bin/activate;source set_env.sh"
-guake -e "python manage.py celery -A knob worker -l debug -c 5"
-
 sleep 5
 guake
