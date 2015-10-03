@@ -11,4 +11,4 @@ kombu==3.0.26
 pytz==2015.4
 pyzmq==14.7.0
 wsgiref==0.1.2
-git+git://github.com/mdaif/exscript.git@adds-os-guesser-tests
+git+git://github.com/knipknap/exscript.git

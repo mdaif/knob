@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from celery import shared_task
-from .helpers import TelnetHandler, flat_map
+from .helpers import ConnectionHandler, flat_map
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -10,7 +10,7 @@ def configure_batch(ips, telnet_commands, username, password):
     results = []
     for ip in ips:
         try:
-            with TelnetHandler(ip, username, password) as device:
+            with ConnectionHandler(ip, username, password) as device:
                 for telnet_command in telnet_commands:
                     device.execute(telnet_command.replace('\\r', '\r'))
         except Exception as e:
