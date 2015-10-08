@@ -5,8 +5,9 @@ A Django application that performs remote configurations on multiple devices, di
 * supports both Telnet and SSH
 * A wizard that accepts common credentials, a list of IPs, and a list of commands to be executed on every device on the list.
 * Sends a log email to the system admin, indicating both the errors and success operations.
+* Providing an option to use a full Python environment. That makes it easy to perform more complex operations like doing regex operations and conditional decisions on the output.
 
 ## Future work
 * Accepts CSV file(s) as input.
-* Providing an interface that accepts python DSL in order to perform regex, loops and conditions.
+
 * Better documentation :)
