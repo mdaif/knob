@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{% static 'css/jquery.steps.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/project.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-switch.min.css' %}">
   </head>
 
   <body>
@@ -97,16 +98,31 @@
                     </section>
                     <h3>Commands</h3>
                     <section>
-                        <div class="form-horizontal" style="padding-top: 10px;">
-                            <div class="form-group">
-                                <label for="commands" class="control-label col-md-3">Commands: *</label>
 
-                                <div class="col-md-9">
-                                    <textarea id="commands" class="form-control required" id="commands" rows="10"
-                                              ></textarea>
+                            <div class="form-horizontal" style="padding-top: 10px;">
+                                <div class="form-group">
+                                    <label for="commands" class="control-label col-md-3">Commands: *</label>
+
+
+                                    <div class="col-md-9">
+                                        <textarea id="commands" class="form-control required" id="commands" rows="10"
+                                                  ></textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="shell-type" class="control-label col-md-3">Full Python Shell: *</label>
+
+                                    <div class="col-md-9">
+
+                                        <input type="checkbox" name="shell-type" id="shell-type">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
+
+
                         <p>(*) Mandatory</p>
                     </section>
                     <h3>Logs</h3>
@@ -162,24 +178,9 @@
     <script src="{% static 'js/additional-methods.min.js' %}"></script>
     <script src="{% static 'js/jquery.steps.min.js' %}"></script>
     <script src="{% static 'js/jquery.noty.packaged.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-switch.min.js' %}"></script>
+
     <script type="text/javascript">
-
-        function onFinishCallback(objs, context){
-            $.ajax({
-              method: "POST",
-              url: "{% url 'exec_command' %}",
-              data: { username: $("#username").val(), password: $("#password").val(),  ips: $("#ips").val(),
-                      commands: $("#commands").val(), admin_email: $("#admin_email").val()
-                    },
-                beforeSend: function(xhr, settings) {
-                    xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken') )
-
-                }
-            })
-              .done(function( msg ) {
-                alert("Data submitted to the backend servers" );
-              });
-        }
 
         function formatErrorMessage(response){
             if (response.form_error) {
@@ -198,6 +199,8 @@
         }
 
         $(document).ready(function() {
+
+
             var form = $("#wizard-form");
             form.validate({
                 errorPlacement: function errorPlacement(error, element) { element.before(error); },
@@ -227,7 +230,7 @@
                       method: "POST",
                       url: "{% url 'exec_command' %}",
                       data: { username: $("#username").val(), password: $("#password").val(),  ips: $("#ips").val(),
-                              commands: $("#commands").val(), admin_email: $("#admin_email").val()
+                              commands: $("#commands").val(), admin_email: $("#admin_email").val(), python_shell: $("#shell-type").bootstrapSwitch('state')
                             },
                         beforeSend: function(xhr, settings) {
                             xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken') )
@@ -273,6 +276,8 @@
                       });
                 }
             });
+
+            $("[name='shell-type']").bootstrapSwitch();
         });
 
 
@@ -286,27 +291,3 @@
 
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

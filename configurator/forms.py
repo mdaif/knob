@@ -19,10 +19,9 @@ class TelnetInputForm(forms.Form):
     ips = forms.CharField(validators=[ips_list_validation])
     commands = forms.CharField()
     admin_email = forms.EmailField()
+    python_shell = forms.BooleanField(required=False)
 
     def clean(self):
         cleaned_data = super(TelnetInputForm, self).clean()
         if 'ips' in cleaned_data:
             cleaned_data['ips'] = cleaned_data['ips'].splitlines()
-        if 'commands' in cleaned_data:
-            cleaned_data['commands'] = cleaned_data['commands'].splitlines()

@@ -25,14 +25,13 @@ class HomePageView(TemplateView):
 
 class CommandExecutionView(View):
     def post(self, request, *args, **kwargs):
-
         form = TelnetInputForm(request.POST)
         if not form.is_valid():
             return HttpResponse(
                 json.dumps({'success': False, 'validation_error': True, 'message': form.errors, 'form_error': True}),
                 content_type="application/json", status=200)
 
-        ip_chunks = chunks(form.cleaned_data['ips'], cpu_count(), form.cleaned_data['commands'], form.cleaned_data['username'], form.cleaned_data['password'])
+        ip_chunks = chunks(form.cleaned_data['ips'], cpu_count(), form.cleaned_data['commands'], form.cleaned_data['username'], form.cleaned_data['password'], form.cleaned_data['python_shell'])
 
         workers = Pool(5)
         email_admin.email = form.cleaned_data['admin_email']  # monkey patching the emaiL_admin function to pass the admin's email parameter .. I know ugly as hell

@@ -6,14 +6,20 @@ import logging
 
 
 def configure_batch(args):
-    ips, telnet_commands, username, password = args
+    ips, telnet_commands, username, password, python_shell = args
     print multiprocessing.current_process()
     results = []
     for ip in ips:
         try:
             with ConnectionHandler(ip, username, password) as device:
-                for telnet_command in telnet_commands:
-                    device.execute(telnet_command.replace('\\r', '\r'))
+                if python_shell:
+                    commands = telnet_commands.replace('\\r', '\r')
+                    exec(commands)
+                else:
+                    telnet_commands = telnet_commands.replace('\\r', '\r').splitlines()
+                    for telnet_command in telnet_commands:
+                        device.execute(telnet_command)
+
         except Exception as e:
                 results.append((False, ip, e.message))
         else:

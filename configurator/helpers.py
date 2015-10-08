@@ -67,9 +67,9 @@ class ConnectionHandler(object):
         return self.conn.response
 
 
-def chunks(all_ips, available_workers, telnet_commands, username, password):
+def chunks(all_ips, available_workers, telnet_commands, username, password, python_shell):
     """Yield successive chunks from list all_ips with required arguments to process the destination ips uniformly distributed among workers."""
     chunk_size = int(math.ceil(float(len(all_ips)) / available_workers))
 
     for i in xrange(0, len(all_ips), chunk_size):
-        yield all_ips[i:i+chunk_size], telnet_commands, username, password
+        yield all_ips[i:i+chunk_size], telnet_commands, username, password, python_shell
