@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/project.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-switch.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/codemirror.css' %}">
   </head>
 
   <body>
@@ -179,6 +180,8 @@
     <script src="{% static 'js/jquery.steps.min.js' %}"></script>
     <script src="{% static 'js/jquery.noty.packaged.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-switch.min.js' %}"></script>
+    <script src="{% static 'js/codemirror.js' %}"></script>
+    <script src="{% static 'js/python.js' %}"></script>
 
     <script type="text/javascript">
 
@@ -200,7 +203,7 @@
 
         $(document).ready(function() {
 
-
+            var cm = null;
             var form = $("#wizard-form");
             form.validate({
                 errorPlacement: function errorPlacement(error, element) { element.before(error); },
@@ -226,11 +229,16 @@
                 },
                 onFinished: function (event, currentIndex)
                 {
+                    if (cm) {
+                        var commands = cm.getValue();
+                    } else {
+                        var commands = $("#commands").val();
+                    }
                     $.ajax({
                       method: "POST",
                       url: "{% url 'exec_command' %}",
                       data: { username: $("#username").val(), password: $("#password").val(),  ips: $("#ips").val(),
-                              commands: $("#commands").val(), admin_email: $("#admin_email").val(), python_shell: $("#shell-type").bootstrapSwitch('state')
+                              commands: commands, admin_email: $("#admin_email").val(), python_shell: $("#shell-type").bootstrapSwitch('state')
                             },
                         beforeSend: function(xhr, settings) {
                             xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken') )
@@ -278,6 +286,24 @@
             });
 
             $("[name='shell-type']").bootstrapSwitch();
+
+            $("#shell-type").on('switchChange.bootstrapSwitch', function(event, state){
+
+                if ($(this).bootstrapSwitch('state')){
+                    cm = CodeMirror.fromTextArea(document.getElementById('commands'), {
+                        lineNumbers: true,
+                        mode: "python",
+                        theme: "default"
+
+                    });
+                } else {
+                    if (cm){
+                        cm.toTextArea();
+                    }
+
+                }
+
+            });
         });
 
 
