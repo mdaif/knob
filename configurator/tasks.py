@@ -5,9 +5,14 @@ import multiprocessing
 import logging
 
 
+logger = logging.getLogger(__name__)
+
+
 def configure_batch(args):
     ips, telnet_commands, username, password, python_shell = args
-    print multiprocessing.current_process()
+    logger.debug("Process %s is Handling the following request, %s, %s",
+    str(multiprocessing.current_process()), str(ips),
+    str(telnet_commands))
     results = []
     for ip in ips:
         try:
@@ -21,8 +26,10 @@ def configure_batch(args):
                         device.execute(telnet_command)
 
         except Exception as e:
-                results.append((False, ip, e.message))
+            logger.error(e.message)
+            results.append((False, ip, e.message))
         else:
+            
             results.append((True, ip, None))
 
     return results
